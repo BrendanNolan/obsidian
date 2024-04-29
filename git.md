@@ -1,0 +1,2 @@
+- Rebase on first commit: `git rebase -i --root`
+- Show all files tracked by git: `git ls-files`
