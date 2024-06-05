@@ -9,5 +9,8 @@
 - Delete the dotfiles from your home directory, if they exist.
 - From the `~/dotfiles` directory, run `stow .` to create the desired symlinks. Now,
   `~/.config/vim/init.vim` will be a symlink to `~/dotfiles/.config/vim/init.vim`, and so on.
-- You are ready to go. You can use your `~/dotfiles` as any other git repo. If you want to add a new
-  dotfile, just add it to the `~/dotfiles` directory and run `stow .` again.
+- You are ready to go. You can use your `~/dotfiles` as any other git repo.
+- If you want to add or remove a dotfile, just add/remove it in the `~/dotfiles` directory and then,
+  from the `~/dotfiles` directory, run `stow -D . && stow .` . This will remove all the stow
+  symlinks and then re-add the symlinks to whatever is still in your `~/dotfiles` repo; for me, this
+  is the easiest way to make sure that everything stays in sync and nothing goes wrong.

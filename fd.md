@@ -6,6 +6,11 @@
 Usage: fd [OPTIONS] [pattern] [path]...
 ```
 
+# Some options that I keep forgetting
+
+- To follow symlinks, use the `-L` or `--follow` options.
+- To search in hidden and ignored files, use the `-u` option (think "unrestricted")
+
 # Search patterns
 
 By default, the pattern will be matched as a regex: `fd "bren.*nolan" my_dir` . If instead you want
