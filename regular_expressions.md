@@ -28,8 +28,9 @@
 
 - Capture groups can be used to match text and capture part of the text for further processing. Use
   the parenthesis syntax for capture groups. For example, the following `sed` command will have
-  `abc` as its first match group and will then use it in the replace string
-  `printf "xxabcxx" | sed -E "s/(abc)/\1Z/"`, printing `xxabcZxx` .
+  `abc` as its first match group, `def` as its second, and will then use these matches in the
+  replace string (see the `\1, \2, ...` syntax)
+  `echo "xxabcxxdefxx" | sed -E "s/(abc).*(def)/\2Z\1/"`, printing `xxdefZabcxx` .
 - You can also have capture subgroups. Generally, the results of the captured groups are in the
   order in which they are defined (in order by open parenthesis). For example, the regular
   expression `(Jan (1987))(x)` will match "Jan 1987x" with the first capture group being `Jan 1987`,
