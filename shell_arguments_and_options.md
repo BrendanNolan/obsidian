@@ -37,7 +37,7 @@ For example, let us take the example of the `pattern` and `path` arguments to th
 make it interesting, both arguments are optional, but again, there is still only one sensible way
 that the shell can interpret arguments.
 
-- If you provide no arguments (please not that we are talking about arguments here, not options),
+- If you provide no arguments (please note that we are talking about arguments here, not options),
   then `pattern` will get a default value that matches everything and `path` will get a default
   value which is the current dir.
 
