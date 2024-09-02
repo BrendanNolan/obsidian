@@ -42,11 +42,11 @@ The command
 `cat hostnames | xargs -I{} -P4 host -t A {} 8.8.8.8`
 
 will print a lot of output that we do not really care about. Suppose we want only the last line of
-every invokation of the `host` command. Well, we could try this
+every invocation of the `host` command. Well, we could try this
 
 `cat hostnames | xargs -I{} -P4 host -t A {} 8.8.8.8 | tail -n1`
 
-but this will just print the last line of the last invokation of the `host` command, because the
+but this will just print the last line of the last invocation of the `host` command, because the
 shell just runs the piped commands one after another. To get over this, let us run the target
 command in its own shell:
 
