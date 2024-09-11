@@ -1,2 +1,4 @@
 - Rebase on first commit: `git rebase -i --root`
 - Show all files tracked by git: `git ls-files`
+- Show stash stats: `git stash show <stash id>`
+- Show stash contents: `git stash show -p <stash id>`
