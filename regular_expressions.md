@@ -45,3 +45,19 @@
 - `{3}` matches exactly 3 of the preceding character or group
 - `{3,9}` matches between 3 and 9 of the preceding character or group
 - `{3,}` matches 3 or more of the preceding character or group
+
+# Lookaheads
+
+- The regular expression `<regex0>(?=<regex1>)` matches `<regex0>` if and only if it **_IS_**
+  followed by `regex1` ; `regex1` will not be part of the match.
+  - Example `q(?=u)` matches the substring `q` of `paqu` but matches nothing in `Iraq`
+- The regular expression `<regex0>(?!<regex1>)` matches `<regex0>` if and only if it **_IS NOT_**
+  followed by `regex1`.
+  - Example `q(?!u)` matches the substring `q` of `Iraq` but matches nothing in `paqu`
+
+You may wonder why we need negative lookaheads when we have negated character classes. Well,
+consider the regualr expressions `q(?!u)` and `q[^u]` . The former matches a `q` if and only if it
+is not followed by a `u` , while the latter matches a `q` **_AND_** the following character if and
+only if the `q` is indeed followed by a character and that character is not a `u` . For example,
+`q(?!u)` matches the `q` in `Iraq` while `q[^u]` matches nothing in `Iraq` ; `q(?!u)` matches `q` in
+`iqa` while `q[^u]` matches `qa` in `iqa` .
