@@ -42,6 +42,53 @@ fi
 
 ```
 
+# String matching
+
+## Straightforward Matching
+
+If you want to check a string for equality, just use the familiar `==` operator:
+
+```bash
+st="why hello world you wild thing"
+if [[ $st == "hello world" ]]; then
+    echo "match"  # will not print
+fi
+```
+
+## Wildcards
+
+The `==` operator even supports wildcards
+
+```bash
+st="why hello world you wild thing"
+if [[ $st == *"hello world"* ]]; then
+    echo "sub match"  # will print
+fi
+```
+
+## Regular Expressions
+
+For regexes, use the `=~` operator
+
+- If your are writing your regex as a literal, do not quote it.
+
+```bash
+st="hello world"
+if [[ $st =~ he.*wo.*d ]]; then
+    echo "match"
+fi
+```
+
+- If your regex comes from a variable, use the `$` syntax as normal.
+
+```bash
+st="hello world"
+regex="he.*wo.*d"
+if [[ $st =~ $regex ]]; then
+    echo "match"
+fi
+```
+
 # Getting the lengths of variables
 
 To get the length of a variable, use `${#var}` , remembering that numbers will just be treated as
@@ -75,7 +122,7 @@ my_array+=("yolo")
 - Loop over an array like this:
 
 ```bash
-for i in "${!my_arr[@]}"; do
-    echo "${my_arr[$i]}"
+for i in "${my_arr[@]}"; do
+    echo "$i"
 done
 ```
