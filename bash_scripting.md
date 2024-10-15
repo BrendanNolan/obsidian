@@ -1,3 +1,13 @@
+# Making The Behaviour Of A Script Sane
+
+Most scripts should have `set -euo pipefail` on the line after the `#!`.
+
+- The `-u` will make sure that the script fails if it tries to use an unset variable
+- The `-e` will make sure that the shell running the script will exit whenever a command in the
+  script fails
+- The `-o pipefail` will make sure that a pipe expression fails if any of the commands along the
+  pipe faile
+
 # Variables
 
 - Be aware that a variable that contains a number is actually treated as a string, so `var=147` is
