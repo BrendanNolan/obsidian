@@ -41,7 +41,7 @@ pub fn greet() {
 
 ### Explanation:
 
-In `main.rs`, the mod `my_module`; statement tells Rust to look for a file named `my_module.rs` in
+In `main.rs`, the `mod my_module;` statement tells Rust to look for a file named `my_module.rs` in
 the `src` directory. Submodule Declaration:
 
 In `my_module.rs`, the `pub mod sub_module;` statement tells Rust to look for a file named
