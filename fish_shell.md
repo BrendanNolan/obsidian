@@ -112,3 +112,25 @@ function ll
     ls -lh $argv
 end
 ```
+# Accepting user input
+
+This example is pretty self explanatory and should cover what you need:
+
+```sh
+while read --nchars 1 -l response \
+    --prompt-str="Are you sure that you want to delete the remote branch? (y/n)"
+      or return 1 # if the read was aborted with ctrl-c/ctrl-d
+    switch $response
+        case y Y
+            git push origin --delete (git branch --show-current)
+            git branch --unset-upstream
+            return 1
+        case n N
+            echo "Doing nothing"
+            return 1
+        case '*'
+            echo "Please type y or n"
+            continue
+    end
+end
+```
