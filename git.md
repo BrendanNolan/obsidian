@@ -8,3 +8,6 @@
 - Make your local branch track a remote branch:
   `git branch --set-upstream-to=origin/<remote-branch-name> <local-branch-name>`
 - Show the current branch name with no other information: `git branch --show-current`
+- Show stats (changed lines in changed files):
+  - for a range of commits: `git diff --stat <commit_a> <commit_b>`
+  - for a commit `git show --stat <commit>`
