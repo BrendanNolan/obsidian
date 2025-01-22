@@ -11,3 +11,10 @@
 - Show stats (changed lines in changed files):
   - for a range of commits: `git diff --stat <commit_a> <commit_b>`
   - for a commit `git show --stat <commit>`
+
+# Rebasing
+
+While you are rebasing, you are successively applying commits from `feature` on top of the `HEAD`
+commit of `master`; thus, during the rebase, `HEAD` will refer to the `HEAD` commit of the `master`
+branch. Keep this in mind when resolving conflicts, e.g. with
+[[vim## Resolving Conflicts With vim fugitive|vim fugitive]].

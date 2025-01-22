@@ -14,16 +14,19 @@
 
 # Git
 
-## Resolving Conflicts With Fugitive
+## Resolving Conflicts With vim fugitive
 
 - Open the file in which you wish to resolve conflicts
 - Run `:Gvdiffsplit!`
 - You will see files open either side of your file, one from each involved branch
 - Put the cursor in the middle file (the "working copy"), on the conflict that you want to resolve.
 - Type `:diffget` (without hitting `Enter`) and look at the autocomplete options:
-  - One will be from a temporary file whose name containts a `2` (this represents the file on the
-    left)
-  - the other will be from a temporary file whose name contains a `3` (this represents the file on
-    the right)
+  - One will be from a temporary file in the `left` buffer whose name containts a `2`; it represents
+    the file as it exists in the `HEAD` commit (be careful here, `HEAD` will represent `master`
+    while you are rebasing `feature` on top of `master`; see [[git#Rebasing|git rebase]])
+  - The other will be from a temporary file in the `right` buffer whose name contains a `3`; it
+    represents the file as it exists the "other" branch, namely the branch that `HEAD` is not
+    referring to (so, during a rebase, this will refer to the comit from the `feature` branch that
+    you are currently trying to apply on top of `master`; see [[git#Rebasing|git rebase]])
   - Choose whichever you want and notice that the conflict hunk where the cursor sits in your
     current copy has been replaced by the hunk that you wanted
