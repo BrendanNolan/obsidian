@@ -14,7 +14,9 @@
 
 # Rebasing
 
-While you are rebasing, you are successively applying commits from `feature` on top of the `HEAD`
-commit of `master`; thus, during the rebase, `HEAD` will refer to the `HEAD` commit of the `master`
-branch. Keep this in mind when resolving conflicts, e.g. with
+While you are rebasing, you are successively applying commits from `feature` on top of `master`.
+Thus, during the rebase, `HEAD` will refer to the last commit from `feature` that you successfully
+rebased on top of `master` (possibly after resolving conflicts) or, if you have not yet successfully
+rebased a commit from `feature` on top of `master`, `HEAD` will refer to the top commit of `master`
+itself. Keep this in mind when resolving conflicts, e.g. with
 [[vim## Resolving Conflicts With vim fugitive|vim fugitive]].
