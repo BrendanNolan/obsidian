@@ -22,3 +22,11 @@ rebased on top of `master` (possibly after resolving conflicts) or, if you have 
 rebased a commit from `feature` on top of `master`, `HEAD` will refer to the top commit of `master`
 itself. Keep this in mind when resolving conflicts, e.g. with
 [[vim## Resolving Conflicts With vim fugitive|vim fugitive]].
+
+# Hooks
+
+Hooks are essentially custom scripts that run automatically after a certain `git` command runs. For
+example, if you want to run a script after a commit, put that script in the file
+`.git/hooks/post-commit` (you may need to create this file) and make sure that
+`.git/hooks/post-commit` is executable. (For an example, see my `dotfiles` repo, for a post-commit
+hook that reruns the GNU `stow` utility to make sure that all of my dotfile symlinks are in order).
