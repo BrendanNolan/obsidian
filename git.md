@@ -13,6 +13,7 @@
 - Show stats (changed lines in changed files):
   - for a range of commits: `git diff --stat <commit_a> <commit_b>`
   - for a commit `git show --stat <commit>`
+- Make an empty commit: `git commit --allow-empty -m "commit message"`
 
 # Rebasing
 
