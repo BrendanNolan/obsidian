@@ -30,3 +30,7 @@
 - From these `:diffget` autocomplete options, choose whichever one you want to resolve the conflict
   and hit `Enter`; notice that the conflict hunk where the cursor sits in your current copy has been
   replaced by the hunk that you wanted
+
+# Useful General Commands
+
+- Try this handy little repo: [actaneon/VimCommands.txt](https://gist.github.com/actaneon/366070)
