@@ -6,7 +6,7 @@ Most scripts should have `set -euo pipefail` on the line after the `#!`.
 - The `-e` will make sure that the shell running the script will exit whenever a command in the
   script fails
 - The `-o pipefail` will make sure that a pipe expression fails if any of the commands along the
-  pipe faile
+  pipe fail
 
 # Variables
 
@@ -27,7 +27,7 @@ var=*
 echo "$var"
 ```
 
-will just print `*` . To be even more sure and avoid ambiguities, use `"${var}` ; this way, you can
+will just print `*` . To be even more sure and avoid ambiguities, use `"${var}"` ; this way, you can
 even do something like
 
 ```bash
