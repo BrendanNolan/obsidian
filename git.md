@@ -3,8 +3,11 @@
 - Rebase on first commit: `git rebase -i --root`
 - Delete remote branch: `git push origin --delete <branch-name>`
 - Show all files tracked by git: `git ls-files`
-- Show stash stats: `git stash show <stash id>`
-- Show stash contents: `git stash show -p <stash id>`
+- Stash
+  - show stash stats: `git stash show <stash id>`
+  - show stash contents: `git stash show -p <stash id>`
+  - stash the current changes without changing the files back to their HEAD state:
+    `git stash store -m "<stash message>" $(git stash create)`
 - Push your branch to the remote and make sure that the local branch tracks the newly created remote
   branch: `git push -u origin <branch-name>`
 - Make your local branch track a remote branch:
