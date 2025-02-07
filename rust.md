@@ -2,7 +2,7 @@
 
 ## Using File Instead of mod.rs (Modern Approach)
 
-As of Rust 2018, you can organize nested modules without using mod.rs. Instead, you use a file named
+As of Rust 2018, you can organise nested modules without using mod.rs. Instead, you use a file named
 after the parent module. Here's how it works:
 
 File Structure:
