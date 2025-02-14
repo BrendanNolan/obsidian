@@ -99,6 +99,20 @@ You can escape the regex characters in a string with `string escape --style=rege
 
 will return the string `a\\b\*c`.
 
+## String Replacing
+
+Use the `string replace` function (with the `-r` flag if you want to use a regular expression). As
+an example:
+
+```sh
+set my_string "___example"
+set cleaned_string (string replace -r '^_+' '' -- $my_string)
+echo $cleaned_string
+
+```
+
+will print `example`.
+
 # Autoloading functions
 
 If you have a function that you want to be autoloaded so that it is always available to the shell,
