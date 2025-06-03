@@ -1,10 +1,29 @@
+# Repeating Inserts
+
+- In normal mode, just type the number, followed by what you wish to insert, followed by escape. For
+  example, to insert `10` `space` characters, you can do the following in `normal` mode:
+  `10i<Space><Esc>` .
+
+# Incrementing/Decrementing En-Masse
+
+- Hilight the range of numbers you want to increment (e.g. you have ten lines that all just contain
+  `0`) and then type `g<Ctrl-a>`.
+
+# Marks
+
+- To make a mark, just type `m` followed by a capital letter naming the mark (you can type a small
+  letter but the mark will then be local to the file). To go to the mark, type a backtick followed
+  by the mark name.
+
 # Macros
 
 ## Editing a macro:
 
 - Use `:new` to open a new throwaway buffer
-- Use `:put a` to put the contents of the register (`a` in this example) into the buffer
-- Edit the macro however you want
+- Use `"ap` to put the contents of the register (`a` in this example) into the buffer
+- Edit the macro however you want. In particular, if you wish to add keysequences like `Enter` or
+  `Ctrl-x` etc., you can type `Ctrl-v` (in insert mode) and then type key sequence you want and vim
+  will add the appropriate escape sequence.
 - Use `"ayy` to yank the line back into the buffer (`a` in this example)
 - Use `:q!` to close the throwaway buffer
 
