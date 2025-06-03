@@ -7,7 +7,7 @@
 # Incrementing/Decrementing En-Masse
 
 - Hilight the range of numbers you want to increment (e.g. you have ten lines that all just contain
-  `0`) and then type `g<Ctrl-a>`.
+  `0`) and then type `g<Ctrl-a>`. (Use `g<Ctrl-x>` for decrementing).
 
 # Marks
 
