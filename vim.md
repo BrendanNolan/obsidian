@@ -24,7 +24,7 @@
 - Edit the macro however you want. In particular, if you wish to add keysequences like `Enter` or
   `Ctrl-x` etc., you can type `Ctrl-v` (in insert mode) and then type key sequence you want and vim
   will add the appropriate escape sequence.
-- Use `"ayy` to yank the line back into the buffer (`a` in this example)
+- Use `0"ay$` to yank the line back into the buffer (`a` in this example)
 - Use `:q!` to close the throwaway buffer
 
 ## Using a macro from :cdo
