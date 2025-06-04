@@ -31,6 +31,11 @@
 
 - `:cdo normal @a`
 
+# Reading Shell Command Output Into A Vim Buffer
+
+- To place the output of a shell command into the current buffer on the line below the cursor, run
+  `:r !<shell_command>` .
+
 # Git
 
 ## Resolving Conflicts With vim fugitive
