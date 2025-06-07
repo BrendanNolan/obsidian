@@ -34,7 +34,8 @@
 # Reading Shell Command Output Into A Vim Buffer
 
 - To place the output of a shell command into the current buffer on the line below the cursor, run
-  `:r !<shell_command>` .
+  `:r!<shell_command>` .
+- If you want to do the same thing but replace the current line (rather than inserting below it), use `:.!<shell_command>`
 
 # Git
 
