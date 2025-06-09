@@ -37,6 +37,40 @@ echo "${var}yeah"
 
 which will print `*yeah` .
 
+## Parameter Expansion
+
+### `${MY_VAR:-backup}`
+
+**Meaning**:
+
+- If `MY_VAR` is **unset or empty**, use `"backup"` as a **temporary value**.
+- **Does not modify** `MY_VAR`.
+
+**Example**:
+
+```bash
+MY_VAR=""
+echo "${MY_VAR:-backup}"   # prints "backup"
+echo "$MY_VAR"          # still prints an empty string
+```
+
+### `${MY_VAR:=backup}`
+
+**Meaning**:
+
+- If MY_VAR is unset or empty, assign "backup" to MY_VAR and use it.
+- Modifies MY_VAR if it was empty or unset.
+
+```bash
+unset MY_VAR
+echo "${MY_VAR:=backup}"   # prints "backup"
+echo "$MY_VAR"          # now prints "backup"
+```
+
+### `${MY_VAR+x}`
+
+Expands to `x` if `MY_VAR` is set (even if empty) and to nothing if `MY_VAR` is not set.
+
 # If statements
 
 ```bash
@@ -52,9 +86,22 @@ fi
 
 ```
 
-# String matching
+### Checking If A Var Exists
 
-## Straightforward Matching
+Use [[#Parameter Expansion]]
+
+```bash
+if [[ ${var+x} ]]; then
+    echo "var is defined"
+fi
+```
+
+This is a bit hacky but is the standard, reliable way to check the existence of a variable in
+`bash`.
+
+### String matching
+
+#### Straightforward Matching
 
 If you want to check a string for equality, just use the familiar `==` operator:
 
@@ -65,7 +112,7 @@ if [[ $st == "hello world" ]]; then
 fi
 ```
 
-## Wildcards
+#### Wildcards
 
 The `==` operator even supports wildcards
 
@@ -76,7 +123,7 @@ if [[ $st == *"hello world"* ]]; then
 fi
 ```
 
-## Regular Expressions
+#### Regular Expressions
 
 For regexes, use the `=~` operator
 
@@ -96,6 +143,32 @@ st="hello world"
 regex="he.*wo.*d"
 if [[ $st =~ $regex ]]; then
     echo "match"
+fi
+```
+
+### Existence Of Files, Dirs, Etc.
+
+Check if a file exists
+
+```bash
+if [[ -f "myfile.txt" ]]; then
+    echo "File exists"
+fi
+```
+
+Check if a directory exists
+
+```bash
+if [[ -d "mydir" ]]; then
+    echo "Directory exists"
+fi
+```
+
+Check if a path (file or dir) exists
+
+```bash
+if [[ -e "something" ]]; then
+    echo "File or directory exists"
 fi
 ```
 
