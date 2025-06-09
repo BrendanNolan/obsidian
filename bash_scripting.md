@@ -71,14 +71,19 @@ echo "$MY_VAR"          # now prints "backup"
 
 Expands to `x` if `MY_VAR` is set (even if empty) and to nothing if `MY_VAR` is not set.
 
-# If statements
+# Conditionals
+
+## Basic Syntax
+
+Bash does support `[]` conditional syntax but it often behaves strangely - always use `[[]]`
+conditional syntax.
 
 ```bash
 i=10
 
-if [ "${i}" -eq 1 ]; then
+if [[ "${i}" -eq 1 ]]; then
     echo "one"
-elif [ "${i}" -eq 2 ]; then
+elif [[ "${i}" -eq 2 ]]; then
     echo "two"
 else
     echo "other"
@@ -86,7 +91,7 @@ fi
 
 ```
 
-### Checking If A Var Exists
+## Checking If A Var Exists
 
 Use [[#Parameter Expansion]]
 
@@ -99,78 +104,30 @@ fi
 This is a bit hacky but is the standard, reliable way to check the existence of a variable in
 `bash`.
 
-### String matching
+## Switches For Checking Various Things
 
-#### Straightforward Matching
+You will see the condition written as `[[ <modifier> <value> ]]` (if there is no `<modifier>`, then
+it just checks that the `<value>` string is nonempty).
 
-If you want to check a string for equality, just use the familiar `==` operator:
+Here are some of the basic modifiers:
 
-```bash
-st="why hello world you wild thing"
-if [[ $st == "hello world" ]]; then
-    echo "match"  # will not print
-fi
-```
+| Modifier | Meaning                                                                          |
+| :------- | :------------------------------------------------------------------------------- |
+| `-n`     | Not Empty                                                                        |
+| `-z`     | Empty                                                                            |
+| `-f`     | File Exists                                                                      |
+| `-d`     | Dir Exists                                                                       |
+| `-e`     | Path Exists                                                                      |
+| `==`     | Equal (supports wildcards)                                                       |
+| `=~`     | Regex Match (if the regex is a literal, do not quote it e.g. use a.*b not "a.*b" |
 
-#### Wildcards
+## Wildcards And Regular Expressions
 
-The `==` operator even supports wildcards
-
-```bash
-st="why hello world you wild thing"
-if [[ $st == *"hello world"* ]]; then
-    echo "sub match"  # will print
-fi
-```
-
-#### Regular Expressions
-
-For regexes, use the `=~` operator
-
-- If your are writing your regex as a literal, do not quote it.
-
-```bash
-st="hello world"
-if [[ $st =~ he.*wo.*d ]]; then
-    echo "match"
-fi
-```
-
-- If your regex comes from a variable, use the `$` syntax as normal.
-
-```bash
-st="hello world"
-regex="he.*wo.*d"
-if [[ $st =~ $regex ]]; then
-    echo "match"
-fi
-```
-
-### Existence Of Files, Dirs, Etc.
-
-Check if a file exists
-
-```bash
-if [[ -f "myfile.txt" ]]; then
-    echo "File exists"
-fi
-```
-
-Check if a directory exists
-
-```bash
-if [[ -d "mydir" ]]; then
-    echo "Directory exists"
-fi
-```
-
-Check if a path (file or dir) exists
-
-```bash
-if [[ -e "something" ]]; then
-    echo "File or directory exists"
-fi
-```
+For wildcards and regular expressions, there are some subtleties to the matching behaviour. In
+particular, only the right hand side of the `==` resp. `=~` will be treated as a wildcard resp.
+regex. Moreover, any wildcard or regex special character that appears inside quotes will be treated
+as escaped as far as the matching is concerned; this goes for quoted literals like `"hello.*world"`
+and quoted variable expansions like `"$my_var"`, `"${my_var}"`.
 
 # Getting the lengths of variables
 
