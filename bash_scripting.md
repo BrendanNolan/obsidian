@@ -81,10 +81,10 @@ conditional syntax.
 ```bash
 i=10
 
-if [[ "${i}" -eq 1 ]]; then
-    echo "one"
-elif [[ "${i}" -eq 2 ]]; then
-    echo "two"
+if [[ "a" == "b" ]]; then
+    echo "first"
+elif [[ "a" == "a" ]]; then
+    echo "second"
 else
     echo "other"
 fi
@@ -128,6 +128,32 @@ particular, only the right hand side of the `==` resp. `=~` will be treated as a
 regex. Moreover, any wildcard or regex special character that appears inside quotes will be treated
 as escaped as far as the matching is concerned; this goes for quoted literals like `"hello.*world"`
 and quoted variable expansions like `"$my_var"`, `"${my_var}"`.
+
+## A sample script to tie the above together
+
+```bash
+#! /usr/bin/env bash
+
+EMP=""
+[[ -z ${EMP} ]] && echo "EMP is empty"
+NONEMP="hello"
+[[ -n ${NONEMP} ]] && echo "NONEMP is not empty"
+[[ -f "$HOME/.tmux.conf" ]] && echo "File ~/.tmux.conf exists"
+[[ -d "$HOME" ]] && echo "Dir ~ exists"
+[[ -e "$HOME" ]] && echo "Path ~ exists"
+[[ ${NONEMP} == he*o ]] && echo "Inline wildcard matches"
+[[ ${NONEMP} =~ he.*o ]] && echo "Inline regex matches"
+HELLO_WILDCARD="he*o"
+HELLO_REGEX="he.*o"
+[[ ${NONEMP} == ${HELLO_WILDCARD} ]] && echo "Expanded wildcard matches"
+[[ ${NONEMP} =~ ${HELLO_REGEX} ]] && echo "Expanded regex matches"
+[[ ${NONEMP} == "${HELLO_WILDCARD}" ]] || echo "Quoted/escaped wildcard does not match"
+[[ ${NONEMP} =~ "${HELLO_REGEX}" ]] || echo "Quoted/escaped regex does not match"
+[[ ${NONEMP} == "he*o" ]] || echo "Quoted/escaped wildcard does not match"
+[[ ${NONEMP} =~ "he.*o" ]] || echo "Quoted/escaped regex does not match"
+
+
+```
 
 # Getting the lengths of variables
 
