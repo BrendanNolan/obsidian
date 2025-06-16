@@ -166,7 +166,17 @@ echo "${#var}"
 ```
 
 will print `3` . If the variable is an array and you want its length, you need to use the `[@]`
-syntax to refer to the whole array : `"${#array[@]}` .
+syntax to refer to the whole array : `"${#array[@]}` (see [[#Arrays]]) .
+
+# Command Substitution
+
+You can pass the output of one command to another command as follows:
+`current_branch=$(git branch --show-current)`
+
+# Process Substitution
+
+You can treat the output of a command like a file and pass it to a command that expects a file as
+follows: `cat <(find . -type f)`
 
 # Arrays
 
@@ -184,7 +194,8 @@ my_array+=("yolo")
 ```
 
 - Access array elements with the familiar ($0$-based) `[]` syntax: `echo "${my_array[0]}"`
-
+- You will only get the first array element if you write `${my_array}` ; to refer to the whole
+  array, you need `${my_array[@]}` .
 - Loop over an array like this:
 
 ```bash
@@ -192,3 +203,10 @@ for i in "${my_arr[@]}"; do
     echo "$i"
 done
 ```
+
+## Creating Arrays
+
+Unless you do something like this `my_filled_array=("foo" "bar" "baz")` , you will probably create
+arrays from the outputs of other commands. The handiest way to do this is with the `readarray`
+command, which reads lines from standard input into a bash array. So, you can use
+[[#Process Substitution]] : ``
