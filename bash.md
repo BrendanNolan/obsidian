@@ -8,6 +8,17 @@ Most scripts should have `set -euo pipefail` on the line after the `#!`.
 - The `-o pipefail` will make sure that a pipe expression fails if any of the commands along the
   pipe fail
 
+# Positional Arguments
+
+- The special variable `#` holds the number of positional arguments. Example usage:
+  `echo "received $# arguments`
+
+# Quoting
+
+Bash will treat text inside single quotes as literal text and will not e.g. expand variables. In
+double quotes, bash will expand variables. I am sure there is more to this but this is the basic
+picture.
+
 # Variables
 
 - Be aware that a variable that contains a number is actually treated as a string, so `var=147` is
@@ -193,6 +204,12 @@ my_filled_array=("foo" "bar" "baz")
 my_array+=("yolo")
 ```
 
+- Append one bash array to another like this:
+
+```bash
+my_array+=("${my_other_array[@]}")
+```
+
 - Access array elements with the familiar ($0$-based) `[]` syntax: `echo "${my_array[0]}"`
 - You will only get the first array element if you write `${my_array}` ; to refer to the whole
   array, you need `${my_array[@]}` .
@@ -208,5 +225,11 @@ done
 
 Unless you do something like this `my_filled_array=("foo" "bar" "baz")` , you will probably create
 arrays from the outputs of other commands. The handiest way to do this is with the `readarray`
-command, which reads lines from standard input into a bash array. So, you can use
-[[#Process Substitution]] : ``
+command, which reads lines from a file standard input into a bash array (you will usually want the
+`-t` switch here, to tell `readarray` to strip the trailing newline character from all incoming
+lines). You can use [[#Process Substitution]] to treat the output of `git ls-files` as a file and
+then pass it to readarray: `readarray -t my_git_files < <(git ls-files)` (the `-t` switch tells
+`readarray` to strip the trailing newline from each line that it reads).
+
+**Question**: Why not just pipe to readarray? **Answer**: In this case, readarray will run in a
+subshell and you won't actually have the array in the calling shell.

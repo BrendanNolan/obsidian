@@ -10,3 +10,15 @@
 The basic syntax is very similar to `xargs`:
 
 `fd -t f | parallel --dry-run sed -i "s/foo/bar/g" {}`
+
+# A Slightly More Interesting Example
+
+Consider the following command:
+
+`git ls-files | parallel "test -w {} && chmod u-w {}"`
+
+It will pass the files to paralell and then paralell will use `/bin/sh` to run it (with the files
+substituted in for the `{}`).
+
+If you really want to run it with bash, use
+`git ls-files | parallel 'bash -c "test -w {} && chmod u-w {}"'`
