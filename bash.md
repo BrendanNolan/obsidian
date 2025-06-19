@@ -223,13 +223,19 @@ done
 
 ## Creating Arrays
 
-Unless you do something like this `my_filled_array=("foo" "bar" "baz")` , you will probably create
-arrays from the outputs of other commands. The handiest way to do this is with the `readarray`
-command, which reads lines from a file standard input into a bash array (you will usually want the
-`-t` switch here, to tell `readarray` to strip the trailing newline character from all incoming
-lines). You can use [[#Process Substitution]] to treat the output of `git ls-files` as a file and
-then pass it to readarray: `readarray -t my_git_files < <(git ls-files)` (the `-t` switch tells
-`readarray` to strip the trailing newline from each line that it reads).
+- Raw: `my_filled_array=("foo" "bar" "baz")`
+- From a command: `my_git_files=($(git ls-files))`
+- The `readarray` command, which reads lines from a file standard input into a bash array (you will
+  usually want the `-t` switch here, to tell `readarray` to strip the trailing newline character
+  from all incoming lines).
+  - Example: You can use [[#Process Substitution]] to treat the output of `git ls-files` as a file
+    and then pass it to `readarray`: `readarray -t my_git_files < <(git ls-files)` .
+  - **Question**: Why not just pipe to `readarray`? **Answer**: In this case, `readarray` will run
+    in a subshell and you won't actually have the array in the calling shell.
 
-**Question**: Why not just pipe to readarray? **Answer**: In this case, readarray will run in a
-subshell and you won't actually have the array in the calling shell.
+# Suppressing Failures
+
+Suppose you want to run a command like this: `git ls-files | parallel chmod u-w {}` and you don't
+want it to fail (return a nonzero exit code) even if some of the individual `chmod` calls failed.
+You can force the whole thing to return a zero exit code just by adding `|| true`:
+`git ls-files | parallel 'chmod u-w {} || true'` See also [[gnu_parallel#Suppressing Failures]]
