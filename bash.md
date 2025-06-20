@@ -129,8 +129,14 @@ Here are some of the basic modifiers:
 | `-f`     | File Exists                                                                      |
 | `-d`     | Dir Exists                                                                       |
 | `-e`     | Path Exists                                                                      |
-| `==`     | Equal (supports wildcards)                                                       |
+| `==`     | Strings Are Equal (supports wildcards)                                           |
 | `=~`     | Regex Match (if the regex is a literal, do not quote it e.g. use a.*b not "a.*b" |
+| `-gt`    | > (for numbers)                                                                  |
+| `-ge`    | >= (for numbers)                                                                 |
+| `-lt`    | < (for numbers)                                                                  |
+| `-le`    | <= (for numbers)                                                                 |
+| `-eq`    | == (for numbers)                                                                 |
+| `-ne`    | != (for numbers)                                                                 |
 
 ## Wildcards And Regular Expressions
 
