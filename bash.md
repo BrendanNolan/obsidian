@@ -245,3 +245,8 @@ Suppose you want to run a command like this: `git ls-files | parallel chmod u-w 
 want it to fail (return a nonzero exit code) even if some of the individual `chmod` calls failed.
 You can force the whole thing to return a zero exit code just by adding `|| true`:
 `git ls-files | parallel 'chmod u-w {} || true'` See also [[gnu_parallel#Suppressing Failures]]
+
+# Exit Codes
+
+If you want the exit status of the last command, it is stored in the special variable `?`, so you
+can get it with `$?` .

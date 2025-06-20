@@ -127,9 +127,9 @@ function ll
 end
 ```
 
-# Accepting user input
+# Arg Parsing
 
-This example is pretty self explanatory and should cover what you need:
+These examples are pretty self explanatory and should cover what you need:
 
 ```sh
 while read --nchars 1 -l response \
@@ -148,4 +148,33 @@ while read --nchars 1 -l response \
             continue
     end
 end
+```
+
+```sh
+#! /usr/bin/env fish
+
+function say_hello
+    argparse 'n/name=' -- $argv
+    echo "Hello, $_flag_name"
+end
+
+say_hello $argv
+```
+
+# Some Examples Of How Text Gets Passed In The Shell
+
+```sh
+#! /usr/bin/env fish
+
+function print_word
+    argparse 'w/word=' -- $argv
+    echo "normal:"
+    echo $_flag_word
+    echo "string escape:"
+    echo (string escape $_flag_word)
+    echo "string escape --style=regex:"
+    echo (string escape --style=regex $_flag_word)
+end
+
+print_word $argv
 ```
