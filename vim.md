@@ -60,3 +60,7 @@
 # Useful General Commands
 
 - Try this handy little repo: [actaneon/VimCommands.txt](https://gist.github.com/actaneon/366070)
+
+# Quickfix
+
+TODO: Look up the difference between `:cdo` and `:cfdo` .
