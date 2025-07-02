@@ -63,4 +63,5 @@
 
 # Quickfix
 
-TODO: Look up the difference between `:cdo` and `:cfdo` .
+- `:cdo` will apply an action to every **entry** in the quickfix list.
+- `:cfdo` will apply an action to every **file** in the quickfix list.
