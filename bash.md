@@ -239,6 +239,26 @@ done
   - **Question**: Why not just pipe to `readarray`? **Answer**: In this case, `readarray` will run
     in a subshell and you won't actually have the array in the calling shell.
 
+# Here String
+
+The "here string" triple cheveron syntax is for passing strings directly to commands via std in e.g.
+`command <<< "$my_var"` .
+
+# String Manipulation
+
+## Splitting Strings On Characters
+
+The `read` builtin has the switches `-a` (create array) and `-r` (do not allow backslashes to escape
+any characters); the latter switch is not often needed but is good to be aware of. `read` expects
+input from `stdin`, so we can use the [[#Here String]] syntax to send input to `read`. We can set
+the `IFS` to delimit the separations. Putting all of this together:
+
+```bash
+stuff="hello,world"
+IFS=',' read -ra hello_and_world <<< "$stuff"
+# This creates the array hello_and_world to look like: ("hello" "world")
+```
+
 # Suppressing Failures
 
 Suppose you want to run a command like this: `git ls-files | parallel chmod u-w {}` and you don't
