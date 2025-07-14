@@ -9,10 +9,11 @@ File Structure:
 
 ```css
 src/
-├── main.rs
-├── my_module.rs
-├── my_module/
-│   └── sub_module.rs
+|-- main.rs
+|-- my_module.rs
+|-- my_module/
+    |-- sub_module.rs
+
 ```
 
 `main.rs`:

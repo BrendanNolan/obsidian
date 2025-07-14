@@ -310,9 +310,9 @@ EOF
 
 ## Here String
 
-| Syntax          | Meaning                       |
-| --------------- | ----------------------------- |
-| `n<<< "string"` | Pass a single string as input |
+| Syntax          | Meaning                                                                                                      |
+| --------------- | ------------------------------------------------------------------------------------------------------------ |
+| `n<<< "string"` | Pass a single string as input (string need not be a literal, it can expand variables like `n<<< "${my_var}`) |
 
 ## Pipes
 
