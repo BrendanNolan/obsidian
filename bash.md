@@ -270,3 +270,57 @@ You can force the whole thing to return a zero exit code just by adding `|| true
 
 If you want the exit status of the last command, it is stored in the special variable `?`, so you
 can get it with `$?` .
+
+# Streams
+
+Here is a stream-agnostic list of all major Bash stream redirection syntaxes, using `n` as the file
+descriptor  
+(defaults: 0 = stdin, 1 = stdout, 2 = stderr):
+
+## Redirect to File
+
+| Syntax     | Meaning                             |
+| ---------- | ----------------------------------- |
+| `n> file`  | Redirect output to file (overwrite) |
+| `n>> file` | Redirect output to file (append)    |
+| `n< file`  | Redirect input from file            |
+
+## Redirect Between File Descriptors
+
+| Syntax | Meaning                           |
+| ------ | --------------------------------- |
+| `n>&m` | Redirect `n` to wherever `m` goes |
+| `n<&m` | Redirect `n` to read from `m`     |
+| `n>&-` | Close output fd `n`               |
+| `n<&-` | Close input fd `n`                |
+
+## Here Document
+
+| Syntax   | Meaning                                                                                                                                                                                                                               |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `n<<EOF` | Pass multiline input until EOF (you can use any string in place of `EOF`, but it must be in the format below: the closing delimiter must appear on its own line with no leading or trailing whitespace, unless quoted in the opening) |
+
+Example:
+
+```bash
+cat <<EOF
+This is a here doc.
+EOF
+```
+
+## Here String
+
+| Syntax          | Meaning                       |
+| --------------- | ----------------------------- |
+| `n<<< "string"` | Pass a single string as input |
+
+## Pipes
+
+Pass stdout of one command to stdin of another (the piped-to command will run in a subshell).
+
+## Process Substitution (Bash-specific)
+
+| Syntax          | Meaning                              |
+| --------------- | ------------------------------------ |
+| `n> >(command)` | Redirect output to `command`'s input |
+| `n< <(command)` | Use `command`'s output as input      |
