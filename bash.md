@@ -1,3 +1,16 @@
+# The Very Basics Of Quoting
+
+If a string has no special characters (spaces, globs, etc.), then it makes no difference if you
+quote it or not; the following are the same:
+
+```bash
+a="foo"
+```
+
+```bash
+a=foo
+```
+
 # Making The Behaviour Of A Script Sane
 
 Most scripts should have `set -euo pipefail` on the line after the `#!`.
