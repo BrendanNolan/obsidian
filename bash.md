@@ -275,7 +275,7 @@ can get it with `$?` .
 
 Here is a stream-agnostic list of all major Bash stream redirection syntaxes, using `n` as the file
 descriptor  
-(defaults: 0 = stdin, 1 = stdout, 2 = stderr):
+(defaults: `0 == stdin`, `1 == stdout`, `2 == stderr`):
 
 ## Redirect to File
 
@@ -294,13 +294,13 @@ descriptor
 | `n>&-` | Close output fd `n`               |
 | `n<&-` | Close input fd `n`                |
 
-## Here Document
+## Here Docs
 
-| Syntax   | Meaning                                                                                                                                                                                                                               |
-| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `n<<EOF` | Pass multiline input until EOF (you can use any string in place of `EOF`, but it must be in the format below: the closing delimiter must appear on its own line with no leading or trailing whitespace, unless quoted in the opening) |
+| Syntax   | Meaning                                                                      |
+| -------- | ---------------------------------------------------------------------------- |
+| `n<<EOF` | Pass multiline input until EOF. Format exactly as in [[###Here Doc Example]] |
 
-Example:
+### Here Doc Example:
 
 ```bash
 cat <<EOF
@@ -308,11 +308,23 @@ This is a here doc.
 EOF
 ```
 
-## Here String
+### Here Doc Expansions
+
+**Heredocs** act like **double-quoted strings** unless the **delimiter is quoted** (e.g. `'EOF'`).
+
+- Unquoted delimiter -> expansions occur (`$var`, `$(...)`, etc.)
+- Quoted delimiter -> no expansions; content is treated literally
+
+## Here Strings
 
 | Syntax          | Meaning                                                                                                      |
 | --------------- | ------------------------------------------------------------------------------------------------------------ |
 | `n<<< "string"` | Pass a single string as input (string need not be a literal, it can expand variables like `n<<< "${my_var}`) |
+
+### Here String Expansions
+
+**Herestrings** (`<<<`) are **always expanded**, as if the input were **double-quoted**, even if you
+use `'text'`. This means variable and command substitution still occur
 
 ## Pipes
 
