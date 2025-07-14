@@ -336,3 +336,18 @@ Pass stdout of one command to stdin of another (the piped-to command will run in
 | --------------- | ------------------------------------ |
 | `n> >(command)` | Redirect output to `command`'s input |
 | `n< <(command)` | Use `command`'s output as input      |
+
+# While Loops
+
+## "while read" Loops
+
+You can stream data into a `while read` loop in various ways (see [[#Streams]] for details on
+streams).
+
+```bash
+while IFS=, read -r x y; do
+    echo "$x and $y"
+done <<< "a,A
+b,B
+c,C"
+```
