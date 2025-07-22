@@ -364,3 +364,28 @@ done <<< "a,A
 b,B
 c,C"
 ```
+
+# Globbing
+
+- `*` matches any string of non-`/` characters, so it will match within a single directory level.
+- `**` matches any string of characters, but only if the shell option `globstar` is enabled
+  (`shopt -s globstar`). Note that, in `zsh`, this behaviour is enabled by default and there is not
+  shell option `globstar` .
+
+Globbing will work with several different glob strings (with will be `OR`ed together). E.g.
+`ls *md *txt` ([[#Brace Expansion]] is often useful here)
+
+## Period Characters
+
+The `.` character has no special meaning in globs
+
+## Unmatched Globs
+
+An unmatched glob will stay as the literal string. E.g. if there are no `.md` files, `*.md` will
+expand to the literal string `*md`. If you set the `nullglob` shell option (`shopt -s nullglob`),
+then an unmatched glob will expand to nothing.
+
+# Brace expansion
+
+The shell will expand something like `a{12}b` to `a1b a2b` . This is useful in globbing, since you
+can list all `.md` and `.txt` file in a dir by running `ls *.{md,txt}` .
