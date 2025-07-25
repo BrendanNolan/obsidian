@@ -388,4 +388,5 @@ then an unmatched glob will expand to nothing.
 # Brace expansion
 
 The shell will expand something like `a{12}b` to `a1b a2b` . This is useful in globbing, since you
-can list all `.md` and `.txt` file in a dir by running `ls *.{md,txt}` .
+can list all `.md` and `.txt` file in a dir by running `ls *.{md,txt}` . Note that if you quote
+around the `{}`, it will not expand.
