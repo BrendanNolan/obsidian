@@ -115,6 +115,28 @@ fi
 
 ```
 
+## Logical Operators and Grouping
+
+### Inside `[[]]`
+
+Inside `[[]]`, you can use `-a` for AND, `-o` for OR, `!` for NOT. For grouping, use escaped parens:
+
+```bash
+[[ \( foo -a bar \) -o baz ]]
+```
+
+### Outside `[[]]`
+
+Outside `[[]]` , you can use `!`, `&&`, `||` as expected. For grouping, you can run the command in
+the current shell like this (note the trailing semicolon, you must close the braces with this or a
+newline):
+
+```bash
+{ foo && bar ; } || baz
+```
+
+### Precedence
+
 ## Checking If A Var Exists
 
 Use [[#Parameter Expansion]]
