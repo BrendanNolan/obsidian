@@ -38,3 +38,19 @@ example, if you want to run a script after a commit, put that script in the file
 `.git/hooks/post-commit` (you may need to create this file) and make sure that
 `.git/hooks/post-commit` is executable. (For an example, see my `dotfiles` repo, for a post-commit
 hook that reruns the GNU `stow` utility to make sure that all of my dotfile symlinks are in order).
+
+# git diff --diff-filter
+
+The `--diff-filter=<character>` switch will filter git changes according to the following rules:
+
+| Character | Meaning      |
+| --------- | ------------ |
+| A         | Added        |
+| C         | Copied       |
+| D         | Deleted      |
+| M         | Modified     |
+| R         | Renamed      |
+| T         | Type Changed |
+| U         | Unmerged     |
+| X         | Unknown      |
+| B         | Broken       |
