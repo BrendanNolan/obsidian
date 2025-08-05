@@ -115,27 +115,31 @@ fi
 
 ```
 
-## Logical Operators and Grouping
+## Logical Operators
 
-### Inside `[[]]`
+Use `||`, `&&` etc. for logical operators inside and outside `[[]]` ; the only exception seems to be
+inside `[]`, but in bash there is no real reason to use `[]` .
 
-Inside `[[]]`, you can use `-a` for AND, `-o` for OR, `!` for NOT. For grouping, use escaped parens:
+### Precedence
+
+## Grouping
+
+### Grouping Inside `[[]]`
+
+Use escaped parens:
 
 ```bash
-[[ \( foo -a bar \) -o baz ]]
+[[ \( foo && bar \) || baz ]]
 ```
 
-### Outside `[[]]`
+### Grouping Outside `[[]]`
 
-Outside `[[]]` , you can use `!`, `&&`, `||` as expected. For grouping, you can run the command in
-the current shell like this (note the trailing semicolon, you must close the braces with this or a
-newline):
+Run the command in the current shell like this (note the trailing semicolon, you must close the
+braces with this or a newline):
 
 ```bash
 { foo && bar ; } || baz
 ```
-
-### Precedence
 
 ## Checking If A Var Exists
 
