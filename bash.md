@@ -278,11 +278,6 @@ done
   - **Question**: Why not just pipe to `readarray`? **Answer**: In this case, `readarray` will run
     in a subshell and you won't actually have the array in the calling shell.
 
-# Here String
-
-The "here string" triple cheveron syntax is for passing strings directly to commands via std in e.g.
-`command <<< "$my_var"` .
-
 # String Manipulation
 
 ## Removing Substrings
@@ -296,7 +291,6 @@ rather than modify existing strings in place) using they following operators:
 | `##`     | Remove longest match from beginning of string  |
 | `%`      | Remove shortest match from end of string       |
 | `%%`     | Remove longest match from end of string        |
-
 
 ```bash
 #!/usr/bin/env bash
