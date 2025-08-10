@@ -285,12 +285,34 @@ The "here string" triple cheveron syntax is for passing strings directly to comm
 
 # String Manipulation
 
+## Removing Substrings
+
+Based on some simple globbing rules, you can remove substrings from strings (to create new strings,
+rather than modify existing strings in place) using they following operators:
+
+| Operator | Action                                         |
+| -------- | ---------------------------------------------- |
+| `#`      | Remove shortest match from beginning of string |
+| `##`     | Remove longest match from beginning of string  |
+| `%`      | Remove shortest match from end of string       |
+| `%%`     | Remove longest match from end of string        |
+
+
+```bash
+#!/usr/bin/env bash
+
+foo="abcdeabcde"
+echo "${foo#a*}"    # prints bcdeabcde
+echo "${foo##a*}"   # prints nothing
+echo "${foo%e*}"    # prints abcdeabcd
+echo "${foo%%e*}"   # prints abcda
+```
+
 ## Splitting Strings On Characters
 
-The `read` builtin has the switches `-a` (create array) and `-r` (do not allow backslashes to escape
-any characters); the latter switch is not often needed but is good to be aware of. `read` expects
-input from `stdin`, so we can use the [[#Here String]] syntax to send input to `read`. We can set
-the `IFS` to delimit the separations. Putting all of this together:
+The `read` builtin (usually used with the `-r` switch which says "do not allow backslashes to escape
+any characters") expects input from `stdin` and splits it on the `IFS` . See this example (which
+uses the [[#Here String]] syntax):
 
 ```bash
 stuff="hello,world"
