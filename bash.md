@@ -293,8 +293,6 @@ rather than modify existing strings in place) using they following operators:
 | `%%`     | Remove longest match from end of string        |
 
 ```bash
-#!/usr/bin/env bash
-
 foo="abcdeabcde"
 echo "${foo#a*}"    # prints bcdeabcde
 echo "${foo##a*}"   # prints nothing
