@@ -308,7 +308,7 @@ uses the [[#Here String]] syntax):
 
 ```bash
 stuff="hello,world"
-IFS=',' read -ra a b <<< "$stuff"
+IFS=',' read -r a b <<< "$stuff"
 # This creates variables a and b with values "hello" and "world"
 ```
 
