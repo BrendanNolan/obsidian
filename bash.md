@@ -303,9 +303,16 @@ echo "${foo%%e*}"   # prints abcda
 ## Splitting Strings On Characters
 
 The `read` builtin (usually used with the `-r` switch which says "do not allow backslashes to escape
-any characters") expects input from `stdin` and splits it on the `IFS` . See this example (which
+any characters") reads a line of input from `stdin` and splits it on the `IFS` . See this example (which
 uses the [[#Here String]] syntax):
 
+```bash
+stuff="hello,world"
+IFS=',' read -ra a b <<< "$stuff"
+# This creates variables a and b with values "hello" and "world"
+```
+
+`read` has the `-a` switch which tells it to create an array:
 ```bash
 stuff="hello,world"
 IFS=',' read -ra hello_and_world <<< "$stuff"
