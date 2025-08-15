@@ -274,7 +274,9 @@ done
   usually want the `-t` switch here, to tell `readarray` to strip the trailing newline character
   from all incoming lines).
   - Example: You can use [[#Process Substitution]] to treat the output of `git ls-files` as a file
-    and then pass it to `readarray`: `readarray -t my_git_files < <(git ls-files)` .
+    and then pass it to `readarray`: `readarray -t my_git_files < <(git ls-files)` . Or, if you
+    want to be super safe against weird file names, use nullbyte separators and do this:
+    `readarray -d '' my_git_files < <(git ls-files -z)`
   - **Question**: Why not just pipe to `readarray`? **Answer**: In this case, `readarray` will run
     in a subshell and you won't actually have the array in the calling shell.
 
