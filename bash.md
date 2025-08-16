@@ -266,6 +266,39 @@ for i in "${my_arr[@]}"; do
 done
 ```
 
+## Slicing Arrays
+
+Bash uses `offset:length` syntax to slice arrays; you can use a negative offset to start at the end.
+
+```bash
+arr=(a b c d e f g)
+for i in "${arr[@]:1:3}"; do
+   echo "$i"
+done
+```
+
+Notice that variables used as indexes are expanded without `$`:
+
+```bash
+arr=(a b c d e f g)
+m=1
+n=3
+for i in "${arr[@]:m:n}"; do
+    echo "$i"
+done
+```
+
+You can get the last `n` elements (note the space before the `-n` , it stops bash from trying
+default-value parameter expansion):
+
+```bash
+arr=(a b c d e f g)
+n=3
+for i in "${arr[@]: -n}"; do
+    echo "$i"
+done
+```
+
 ## Creating Arrays
 
 - Raw: `my_filled_array=("foo" "bar" "baz")`
@@ -274,8 +307,8 @@ done
   usually want the `-t` switch here, to tell `readarray` to strip the trailing newline character
   from all incoming lines).
   - Example: You can use [[#Process Substitution]] to treat the output of `git ls-files` as a file
-    and then pass it to `readarray`: `readarray -t my_git_files < <(git ls-files)` . Or, if you
-    want to be super safe against weird file names, use nullbyte separators and do this:
+    and then pass it to `readarray`: `readarray -t my_git_files < <(git ls-files)` . Or, if you want
+    to be super safe against weird file names, use nullbyte separators and do this:
     `readarray -d '' my_git_files < <(git ls-files -z)`
   - **Question**: Why not just pipe to `readarray`? **Answer**: In this case, `readarray` will run
     in a subshell and you won't actually have the array in the calling shell.
@@ -305,8 +338,8 @@ echo "${foo%%e*}"   # prints abcda
 ## Splitting Strings On Characters
 
 The `read` builtin (usually used with the `-r` switch which says "do not allow backslashes to escape
-any characters") reads a line of input from `stdin` and splits it on the `IFS` . See this example (which
-uses the [[#Here String]] syntax):
+any characters") reads a line of input from `stdin` and splits it on the `IFS` . See this example
+(which uses the [[#Here String]] syntax):
 
 ```bash
 stuff="hello,world"
@@ -315,6 +348,7 @@ IFS=',' read -r a b <<< "$stuff"
 ```
 
 `read` has the `-a` switch which tells it to create an array:
+
 ```bash
 stuff="hello,world"
 IFS=',' read -ra hello_and_world <<< "$stuff"

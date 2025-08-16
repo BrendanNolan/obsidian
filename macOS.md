@@ -13,11 +13,13 @@ e.g. `open -a Zathura my_file.pdf`
 # Homebrew
 
 To dump all of your installed stuff to a file which can be used to reinstall it:
+
 ```bash
 brew bundle dump --all --file=<dump_file>
 ```
 
 To ask brew to install everything from a dumped file:
+
 ```bash
 brew bundle --file=<dump_file>
 ```
