@@ -312,6 +312,8 @@ done
     `readarray -d '' my_git_files < <(git ls-files -z)`
   - **Question**: Why not just pipe to `readarray`? **Answer**: In this case, `readarray` will run
     in a subshell and you won't actually have the array in the calling shell.
+- The `readarray` command will usually leave delimeters in place. If you want to remove them, you
+  may want `read -a` [[#Splitting Strings On Characters]] .
 
 # String Manipulation
 
