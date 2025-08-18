@@ -349,11 +349,11 @@ IFS=',' read -r a b <<< "$stuff"
 # This creates variables a and b with values "hello" and "world"
 ```
 
-`read` has the `-a` switch which tells it to create an array:
+`read -a <array_name>` will tell the `read` command to create an array from what it reads:
 
 ```bash
 stuff="hello,world"
-IFS=',' read -ra hello_and_world <<< "$stuff"
+IFS=',' read -r -a hello_and_world <<< "$stuff"
 # This creates the array hello_and_world to look like: ("hello" "world")
 ```
 
