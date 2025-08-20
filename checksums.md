@@ -15,4 +15,3 @@ fn ones_complement_sum(integers: &[u16]) -> u16 {
     result as u16
 }
 ```
-
