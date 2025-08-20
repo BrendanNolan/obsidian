@@ -1,12 +1,18 @@
-# One's Complement 16-bit Addition
+# One's Complement `n`-bit Addition
 
-One's complement `16`-bit addition is a way to sum two `16`-bit numbers and get another `16`-bit
-number. To sum two `16`-bit integers with one's complement addition, just sum the numbers normally
-and denote the sum by `x`:
+One's complement `n`-bit addition is a way to sum two `n`-bit numbers and get another `n`-bit
+number. It is probably best explained in code (we'll use `n==16` for the code):
 
-- If `x<2^16`, then `x` is your answer
-- If `x>=2^16`, then notice that `2^16<=x<2^17` and so `x`'s binary representation has a `1` as its
-  most significant (`17`th) bit. To get the one's complement sum, simply replace this `1` with a `0`
-  (drop the high bit) and add `1` to the result. You may again have a number that is `>=2^16`, in
-  which case you repeat until you do have a number that is `<2^16` . This process is called
-  `"end-around carry"` .
+```rust
+fn ones_complement_sum(integers: &[u16]) -> u16 {
+    // Chop off the high bits (if there are any) and add back in as low bits
+    let fold = |x| (x & 0xFFFF) + (x >> 16);
+    let mut result: u32 = 0;
+    for &x in integers {
+        result += x as u32;
+        result = fold(result);
+    }
+    result as u16
+}
+```
+
