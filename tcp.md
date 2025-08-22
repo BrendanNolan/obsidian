@@ -27,3 +27,26 @@ The TCP/user interface provides for calls made by the user on the TCP to `OPEN` 
 connection, to `SEND` or `RECEIVE` data, or to obtain `STATUS` about a connection. These calls are
 like other calls from user programs on the operating system, for example, the calls to open, read
 from, and close a file.
+
+A connection is specified in the `OPEN` call by the local port and foreign socket arguments. In
+return, the TCP supplies a (short) local connection name by which the user refers to the connection
+in subsequent calls. There are several things that must be remembered about a connection. To store
+this information we imagine that there is a data structure called a Transmission Control Block
+(TCB). One implementation strategy would have the local connection name be a pointer to the TCB for
+this connection. The `OPEN` call also specifies whether the connection establishment is to be
+actively pursued, or to be passively waited for.
+
+A passive `OPEN` request means that the process wants to accept incoming connection requests rather
+than attempting to initiate a connection. Often the process requesting a passive `OPEN` will accept
+a connection request from any caller. In this case a foreign socket of all zeros is used to denote
+an unspecified socket. Unspecified foreign sockets are allowed only on passive `OPEN`s.
+
+Processes can issue passive OPENs and wait for matching active OPENs from other processes and be
+informed by the TCP when connections have been established. Two processes which issue active OPENs
+to each other at the same time will be correctly connected. This flexibility is critical for the
+support of distributed computing in which components act asynchronously with respect to each other.
+
+Processes can issue passive OPENs and wait for matching active OPENs from other processes and be
+informed by the TCP when connections have been established. Two processes which issue active OPENs
+to each other at the same time will be correctly connected. This flexibility is critical for the
+support of distributed computing in which components act asynchronously with respect to each other.
