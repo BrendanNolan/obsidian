@@ -50,3 +50,18 @@ Processes can issue passive OPENs and wait for matching active OPENs from other 
 informed by the TCP when connections have been established. Two processes which issue active OPENs
 to each other at the same time will be correctly connected. This flexibility is critical for the
 support of distributed computing in which components act asynchronously with respect to each other.
+
+If there are several pending passive OPENs (recorded in TCBs) with the same local socket, an foreign
+active OPEN will be matched to a TCB with the specific foreign socket in the foreign active OPEN, if
+such a TCB exists, before selecting a TCB with an unspecified foreign socket.
+
+The procedures to establish connections utilize the synchronize (SYN) control flag and involves an
+exchange of three messages. This exchange has been termed a three-way hand shake [3].
+
+A connection is initiated by the rendezvous of an arriving segment containing a SYN and a waiting
+TCB entry each created by a user OPEN command. The matching of local and foreign sockets determines
+when a connection has been initiated. The connection becomes "established" when sequence numbers
+have been synchronized in both directions.
+
+The clearing of a connection also involves the exchange of segments, in this case carrying the FIN
+control flag.
