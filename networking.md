@@ -85,5 +85,3 @@ to the receiving application.
 conservative in what you do, be liberal in what you accept from others.
 
 ## Functional Specification
-
-
