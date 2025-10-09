@@ -1,7 +1,8 @@
 # pgrep
 
 - `-l` long output
-- `-x` require exact match of the process name
+- `-x` match the exact process name
+- `-f` match the exact command line
 
 # ps
 
