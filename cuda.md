@@ -83,7 +83,7 @@ assumes we have enough threads to more than cover the array size.
 ```cpp
 __global__
 void saxpy(const int n, const float a, const float* x, float* y) {
-    const int i = blockId.x * blockDim.x + threadId.x;
+    const int i = blockIdx.x * blockDim.x + threadIdx.x;
     if (i < n)
         y[i] = a * x[i] + y[i];
 }
@@ -103,7 +103,7 @@ recommended to use a `grid-stride loop`:
 __global__
 void saxpy(const int n, const float a, const float* x, float* y) {
     const auto thread_count = blockDim.x * gridDim.x; // Notice that this will be our stride length
-    for (auto i = blockId.x * blockDim.x + threadId.x; i < n; i += thread_count)
+    for (auto i = blockIdx.x * blockDim.x + threadIdx.x; i < n; i += thread_count)
         y[i] = a * x[i] + y[i];
 }
 ```
