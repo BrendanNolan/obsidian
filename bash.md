@@ -337,6 +337,15 @@ echo "${foo%e*}"    # prints abcdeabcd
 echo "${foo%%e*}"   # prints abcda
 ```
 
+## Replacing Substrings
+
+```bash
+${var/pattern/replacement} # replaces the first match of pattern with replacement
+${var//pattern/replacement} # replaces all matches of pattern with replacement
+# E.g.
+${var// /} # removes all spaces
+```
+
 ## Splitting Strings On Characters
 
 The `read` builtin (usually used with the `-r` switch which says "do not allow backslashes to escape
