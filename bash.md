@@ -484,3 +484,13 @@ then an unmatched glob will expand to nothing.
 The shell will expand something like `a{12}b` to `a1b a2b` . This is useful in globbing, since you
 can list all `.md` and `.txt` file in a dir by running `ls *.{md,txt}` . Note that if you quote
 around the `{}`, it will not expand.
+
+# Running Jobs In The Background
+
+To run a job in the background, you can do `command &` . The potential issue is that if the parent
+process (usually a shell here of course) exits before the command completes, the command will be
+killed. For example, imagine a script that runs `rm -rf large_dir &`; this script may exit before
+the dir removal completes and the result will be that the dir removal job will be killed. Enter
+`nohup` ; this is short for "no hangup" and you can use it to make sure that the job is not killed:
+`nohup rm -rf large_dir &> /dev/null &` (you probably don't want anything printed from this, hence
+the `&> /dev/null`)
