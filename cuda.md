@@ -89,8 +89,8 @@ void saxpy(const int n, const float a, const float* x, float* y) {
 }
 ```
 
-This is called a `monolithic kernel` because it assumes a single large grid of threads large enough
-to process the entire array in a single pass; you might launch it on a large array like this:
+This is called a `monolithic kernel` because it assumes a single grid of threads large enough to
+process the entire array in a single pass; you might launch it on a large array like this:
 
 ```cpp
 saxpy<<<4096,256>>>(1<<20, 2.0, x, y);
