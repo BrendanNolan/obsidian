@@ -9,15 +9,22 @@ $$
 
 ## Intuition
 
-For $x \in \mathbb{R}^m$, consider the function
+For $x \in \mathbb{R}^m$, consider the `variance function` of $f$ at $x$ (my term)
 
 $$
-f_x: \mathbb{R}^m \to \mathbb{R}^n, \quad h \mapsto f(x + h) - f(x)
+\mathbb{R}^m \to \mathbb{R}^n, \quad h \mapsto f(x + h) - f(x)
 $$
 
-This function describes how $f$ varies around $x$. $\frac{df}{dx}$ approximates $f_x$ in the sense
-that the difference between the two, relative to the input (an element of $\mathbb{R}^m$),
-approaches $0$ as the input approaches $0 \in \mathbb{R}^m$.
+which describes how $f$ varies around $x$. Similarly, the variance function of $\frac{df}{dx}$ at
+$x$
+
+$$
+\mathbb{R}^m \to \mathbb{R}^n, \quad h \mapsto \frac{df}{dx}(x + h) - \frac{df}{dx}(x) = \frac{df}{dx}(h)
+$$
+
+describes how the function $\frac{df}{dx}$ varies around $x$. Now, $\frac{df}{dx}$ approximates $f$
+at $x$ in the sense that the difference between the their variance functions at $x$, relative to the
+input $h \in \mathbb{R}^m$, approaches $0$ as the input $h$ approaches $0 \in \mathbb{R}^m$.
 
 ## Notation
 
