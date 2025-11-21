@@ -9,22 +9,19 @@ $$
 
 ## Intuition
 
-For $x \in \mathbb{R}^m$, consider the `variance function` of $f$ at $x$ (my term)
+Let $X$, $W$ be normed vector spaces, let $f \colon X \to W$ be a not-necessarily-linear function,
+and let $x$ be an element of $X$. We define the `variance function` (my terminology, not standard)
+of $f$ at $x$ by
 
 $$
-\mathbb{R}^m \to \mathbb{R}^n, \quad h \mapsto f(x + h) - f(x)
+V(f,x) \colon X \backslash \{0\} \to W; \quad h \mapsto (f(x+h) - f(x))/||h||
 $$
 
-which describes how $f$ varies around $x$. Similarly, the variance function of $\frac{df}{dx}$ at
-$x$
+$V(f,x)$ describes how $f$ varies around $x$, scaling by the perturbation from $x$. If $f$ is
+linear, then of course $V(f,x)$ simply sends $h$ to $f(h)/||h||$ and does not even depend on $x$.
 
-$$
-\mathbb{R}^m \to \mathbb{R}^n, \quad h \mapsto \frac{df}{dx}(x + h) - \frac{df}{dx}(x) = \frac{df}{dx}(h)
-$$
-
-describes how the function $\frac{df}{dx}$ varies around $x$. Now, $\frac{df}{dx}$ approximates $f$
-at $x$ in the sense that the difference between the their variance functions at $x$, relative to the
-input $h \in \mathbb{R}^m$, approaches $0$ as the input $h$ approaches $0 \in \mathbb{R}^m$.
+Now, $\frac{df}{dx}$ approximates $f$ at $x$ in the sense that the difference between the their
+variance functions at $x$ approaches $0$ as the perturbation of $x$ approaches $0 \in \mathbb{R}^m$.
 
 ## Notation
 
