@@ -25,10 +25,12 @@ variance functions at $x$ approaches $0$ as the perturbation of $x$ approaches $
 
 ## Notation
 
-Let $dx \in \mathbb{R}^m$ be small (so that $x + dx$ is a small perturbation of $x$) and denote by
-$df$ the corresponding variation $f_x(dx) = f(x + dx) - f(x)$ of $f$ around $x$. We get the natural
-equation which gives us the rationale for the $\frac{df}{dx}$ notation:
+Denote by $df$ the variation $V(f,x)$ of $f$ around $x$. Let $dx \in \mathbb{R}^m$ be small (so that
+$x + dx$ is a small perturbation of $x$). Then, for small enough $dx$, the definition of the
+derivative tells us that
 
 $$
 \frac{df}{dx}(dx) = df
 $$
+
+which gives us the rationale for the $\frac{df}{dx}$ notation.
