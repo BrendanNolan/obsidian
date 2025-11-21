@@ -1,36 +1,57 @@
 # Definition
 
 The `derivative` of a function $f \colon \mathbb{R}^m \to \mathbb{R}^n$ at $x \in \mathbb{R}^m$ is
-the unique linear function $\frac{df}{dx} \colon \mathbb{R}^m \to \mathbb{R}^n$ such that
+the unique linear function $f'(x) \colon \mathbb{R}^m \to \mathbb{R}^n$ such that
 
 $$
-\lim_{h \to 0} \frac{||(f(x + h) - f(x)) - \frac{df}{dx}(h)||}{||h||} = 0
+\lim_{h \to 0} \frac{||(f(x + h) - f(x)) - f'(x)(h)||}{||h||} = 0
 $$
+
+**Note:** Take care about the function $f'$; its domain is the points in $\mathbb{R}^m$ where $f$ is
+differentiable and its codomain is the $mn$-dim vector space of linear maps
+$\mathbb{R}^m \to \mathbb{R}^n$.
 
 ## Intuition
 
-Let $X$, $W$ be normed vector spaces, let $f \colon X \to W$ be a not-necessarily-linear function,
+Let $X$, $W$ be normed vector spaces, let $g \colon X \to W$ be a not-necessarily-linear function,
 and let $x$ be an element of $X$. We define the `variance function` (my terminology, not standard)
-of $f$ at $x$ by
+of $g$ at $x$ by
 
 $$
-V(f,x) \colon X \backslash \{0\} \to W; \quad h \mapsto (f(x+h) - f(x))/||h||
+V(g,x) \colon X \backslash \{0\} \to W; \quad h \mapsto g(x+h) - g(x)
 $$
 
-$V(f,x)$ describes how $f$ varies around $x$, scaling by the perturbation from $x$. If $f$ is
-linear, then of course $V(f,x)$ simply sends $h$ to $f(h)/||h||$ and does not even depend on $x$.
+$V(g,x)$ describes how $g$ varies around $x$. If $g$ is linear, then of course $V(g,x)$ is just $g$
+and does not even depend on $x$.
 
-Now, $\frac{df}{dx}$ approximates $f$ at $x$ in the sense that the difference between the their
-variance functions at $x$ approaches $0$ as the perturbation of $x$ approaches $0 \in \mathbb{R}^m$.
+Now, by the definition of the derivative, $f'(x)$ approximates $f$ at $x$ in the sense that the
+difference between the their variance functions at $x$, scaled by the perturbation of $x$,
+approaches $0$ as the perturbation of $x$ approaches $0$.
 
 ## Notation
 
-Denote by $df$ the variation $V(f,x)$ of $f$ around $x$. Let $dx \in \mathbb{R}^m$ be small (so that
-$x + dx$ is a small perturbation of $x$). Then, for small enough $dx$, the definition of the
+Let us fix some $x \in \mathbb{R}^m$. Denote $V(f,x)$ by $df$, so that
+$df \colon h \mapsto f(x+h) - f(x)$. Let $dx \in \mathbb{R}^m$ be small. Now, the definition of the
 derivative tells us that
 
 $$
-\frac{df}{dx}(dx) = df
+\frac{||df - f'(x)(dx)||}{||dx||} \approx 0
 $$
 
-which gives us the rationale for the $\frac{df}{dx}$ notation.
+Now, since $dx$ is small, we certainly have
+
+$$
+||df - f'(x)(dx)|| \approx 0
+$$
+
+i.e.
+
+$$
+f'(x)(dx) \approx df
+$$
+
+which gives us the rationale for the $\frac{df}{dx}$ notation, because we get
+
+$$
+\frac{df}{dx}(dx) \approx df
+$$
