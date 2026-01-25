@@ -10,7 +10,9 @@
   - show stash contents: `git stash show -p <stash id>`
   - stash the current changes without changing the files back to their HEAD state:
 
-    `git stash store -m "<stash message>" $(git stash create)`
+    ```bash
+    git stash store -m "<stash message>" $(git stash create)
+    ```
 
 - Push your branch to the remote and make sure that the local branch tracks the newly created remote
   branch: `git push -u origin <branch-name>`
@@ -54,3 +56,13 @@ The `--diff-filter=<character>` switch will filter git changes according to the 
 | U         | Unmerged     |
 | X         | Unknown      |
 | B         | Broken       |
+
+# Merging
+
+- If you want the merge to go through if and only if it is a fast-forward (i.e. the current HEAD
+of `master` is an ancestor of the current HEAD of `feature`), then run
+
+```bash
+git checkout master
+git merge --ff-only feature
+```
