@@ -65,3 +65,14 @@
 
 - `:cdo` will apply an action to every **entry** in the quickfix list.
 - `:cfdo` will apply an action to every **file** in the quickfix list.
+
+# Make Command
+
+Use
+
+`:set makeprg=<your build command>`
+
+in order that you can use the `:make` command in vim to run your command and see the output in the
+quickfix list. If your command has spaces, remember to escape them:
+
+`:set makeprg=cargo\ build`
