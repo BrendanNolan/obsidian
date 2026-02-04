@@ -66,3 +66,77 @@ The `--diff-filter=<character>` switch will filter git changes according to the 
 git checkout master
 git merge --ff-only feature
 ```
+
+# Gitignore
+
+## Gitignore Files
+
+If a pattern is specified in any of the following files, git will ignore matching files:
+
+- Repository `.gitignore` - applies to whole repository
+- `.gitignore` in subdirectories - patterns apply to that directory and below
+- Global ignore (`~/.config/git/ignore`) - applies to all your repos
+
+## Gitignore Syntax
+
+### Basic Patterns
+
+| Pattern     | Meaning                                                   |
+| ----------- | --------------------------------------------------------- |
+| `file.txt`  | Ignore `file.txt` in any directory                        |
+| `/file.txt` | Ignore `file.txt` only in the root directory              |
+| `dir/`      | Ignore any directory `dir` (and all its contents)         |
+| `/dir/`     | Ignore the directory `dir` (and all its contents) in root |
+| `*.log`     | Ignore all files ending in `.log`                         |
+
+### Wildcards
+
+| Wildcard | Meaning                                                       |
+| -------- | ------------------------------------------------------------- |
+| `*`      | Matches any characters but does not span directory boundaries |
+| `**`     | Matches any characters and does span directory boundaries     |
+| `?`      | Matches exactly one character                                 |
+| `[abc]`  | Matches any character in the brackets                         |
+| `[0-9]`  | Matches any character in the range                            |
+
+### Examples
+
+```gitignore
+# Comments start with #
+
+# Ignore all .log files
+*.log
+
+# Ignore node_modules anywhere
+node_modules/
+
+# Ignore build directory in root only
+/build/
+
+# Ignore all .txt files in doc/ directory (not subdirectories)
+doc/*.txt
+
+# Ignore all .pdf files in doc/ and its subdirectories
+doc/**/*.pdf
+
+# Ignore files named temp with any single-char extension
+temp.?
+
+# Negation: track this file even if ignored above
+!important.log
+```
+
+### Key Rules
+
+1. **Trailing slash** (`dir/`) matches only directories
+2. **Leading slash** (`/file`) anchors to the repository root
+3. **Negation** (`!pattern`) re-includes previously ignored files
+4. **Later rules override earlier ones** in the same file
+5. **Blank lines** are ignored
+6. **`#`** starts a comment (use `\#` for literal `#`)
+
+### Double-star patterns
+
+- `**/foo` -- matches `foo` anywhere
+- `foo/**` -- matches everything inside `foo/`
+- `a/**/b` -- matches `a/b`, `a/x/b`, `a/x/y/b`, etc.
