@@ -59,8 +59,8 @@ The `--diff-filter=<character>` switch will filter git changes according to the 
 
 # Merging
 
-- If you want the merge to go through if and only if it is a fast-forward (i.e. the current HEAD
-of `master` is an ancestor of the current HEAD of `feature`), then run
+- If you want the merge to go through if and only if it is a fast-forward (i.e. the current HEAD of
+  `master` is an ancestor of the current HEAD of `feature`), then run
 
 ```bash
 git checkout master
