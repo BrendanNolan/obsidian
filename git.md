@@ -33,6 +33,13 @@ rebased a commit from `feature` on top of `master`, `HEAD` will refer to the top
 itself. Keep this in mind when resolving conflicts, e.g. with
 [[vim## Resolving Conflicts With vim fugitive|vim fugitive]].
 
+# Stop Tracking A File
+
+```bash
+git rm --cached my_file.txt # Stop tracking the file
+echo 'my_file.txt' >> .gitignore
+```
+
 # Hooks
 
 Hooks are essentially custom scripts that run automatically after a certain `git` command runs. For

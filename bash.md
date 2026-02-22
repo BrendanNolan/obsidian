@@ -25,6 +25,14 @@ Most scripts should have `set -euo pipefail` on the line after the `#!`.
 
 - The special variable `#` holds the number of positional arguments. Example usage:
   `echo "received $# arguments`
+- If you want to pass all positional arguments to another script, use "$@" to pass them
+  correctly without word splitting, e.g.
+
+```bash
+#!/usr/bin/env bash
+
+git rm --cached "$@"
+```
 
 # Quoting
 
