@@ -125,7 +125,7 @@ fi
 
 ## Logical Operators
 
-Use `||`, `&&` etc. for logical operators inside and outside `[[]]` ; the only exception seems to be
+Use `!`, `||`, `&&` etc. __surrounded by spaces__ for logical operators inside and outside `[[]]` ; the only exception seems to be
 inside `[]`, but in bash there is no real reason to use `[]` .
 
 ### Precedence
