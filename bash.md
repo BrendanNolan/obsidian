@@ -25,8 +25,8 @@ Most scripts should have `set -euo pipefail` on the line after the `#!`.
 
 - The special variable `#` holds the number of positional arguments. Example usage:
   `echo "received $# arguments`
-- If you want to pass all positional arguments to another script, use "$@" to pass them
-  correctly without word splitting, e.g.
+- If you want to pass all positional arguments to another script, use "$@" to pass them correctly
+  without word splitting, e.g.
 
 ```bash
 #!/usr/bin/env bash
@@ -125,8 +125,8 @@ fi
 
 ## Logical Operators
 
-Use `!`, `||`, `&&` etc. __surrounded by spaces__ for logical operators inside and outside `[[]]` ; the only exception seems to be
-inside `[]`, but in bash there is no real reason to use `[]` .
+Use `!`, `||`, `&&` etc. **surrounded by spaces** for logical operators inside and outside `[[]]` ;
+the only exception seems to be inside `[]`, but in bash there is no real reason to use `[]` .
 
 ### Precedence
 
