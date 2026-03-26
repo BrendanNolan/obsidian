@@ -46,16 +46,10 @@
 - Run `:Gvdiffsplit!`
 - You will see files open either side of your file, one from each involved branch
 - Put the cursor in the middle file (the "working copy"), on the conflict that you want to resolve.
-- Type `:diffget` (without hitting `Enter`) and look at the autocomplete options:
-  - One will be from a temporary file in the `left` buffer whose name containts a `2`; it represents
-    the file as it exists in the `HEAD` commit - to understand which commit this really means, see
-    [[git#Rebasing|git rebase]]
-  - The other will be from a temporary file in the `right` buffer whose name contains a `3`; it
-    represents the file as it exists the "other" branch, namely the branch that `HEAD` is not
-    referring to - to understand which commit this really means see [[git#Rebasing|git rebase]]
-- From these `:diffget` autocomplete options, choose whichever one you want to resolve the conflict
-  and hit `Enter`; notice that the conflict hunk where the cursor sits in your current copy has been
-  replaced by the hunk that you wanted
+- Hit `:diffget //2` to choose the `ours` option and type `:diffget //3` to choose the `theirs`
+  option (for the meanings of these options, see [[git## Ours and Theirs| git ours and theirs]])
+- After `:diffget ...`, notice that the conflict hunk where the cursor sits in your current copy has
+  been replaced by the hunk that you wanted
 
 # Useful General Commands
 

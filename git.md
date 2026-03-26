@@ -74,6 +74,19 @@ git checkout master
 git merge --ff-only feature
 ```
 
+## Ours and Theirs
+
+Understanding what `ours` and `theirs` refer to depends on the operation:
+
+| Operation   | "ours"                         | "theirs"                             |
+| ----------- | ------------------------------ | ------------------------------------ |
+| Merge       | Current branch (where you are) | Branch being merged in               |
+| Rebase      | Branch being rebased onto      | Commit being applied from the branch |
+| Cherry-pick | Current branch (where you are) | Commit being cherry-picked           |
+
+When resolving conflicts, you can use `git checkout --ours <file>` or `git checkout --theirs <file>`
+to keep one version entirely.
+
 # Gitignore
 
 ## Gitignore Files
