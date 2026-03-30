@@ -72,14 +72,12 @@ A simple spinlock using `exchange()` with acquire-release ordering:
 class SpinLock {
 private:
     std::atomic<bool> locked_{false};
-
 public:
     void lock() {
         while (locked_.exchange(true, std::memory_order_acquire)) {
             // Spin until we acquired the lock
         }
     }
-
     void unlock() {
         locked_.store(false, std::memory_order_release);
     }
@@ -103,61 +101,48 @@ A single-producer, single-consumer queue using a ring buffer and acquire-release
 template <typename T, size_t Capacity = 256>
 class SPSCQueue {
     static_assert((Capacity & (Capacity - 1)) == 0, "Capacity must be a power of 2");
-
 private:
     static constexpr size_t MASK = Capacity - 1;
-
     alignas(64) std::atomic<size_t> head_{0};  // Producer index
     alignas(64) std::atomic<size_t> tail_{0};  // Consumer index
     alignas(64) std::array<T, Capacity> buffer_;
-
 public:
     SPSCQueue() = default;
     ~SPSCQueue() = default;
-
     SPSCQueue(const SPSCQueue&) = delete;
     SPSCQueue& operator=(const SPSCQueue&) = delete;
-
     // Enqueue: only called by producer
     bool enqueue(T value) {
         const size_t current_head = head_.load(std::memory_order_relaxed);
         const size_t next_head = (current_head + 1) & MASK;
-
         // Check if queue is full
         if (next_head == tail_.load(std::memory_order_acquire)) {
             return false;
         }
-
         buffer_[current_head] = value;
         head_.store(next_head, std::memory_order_release);
         return true;
     }
-
     // Dequeue: only called by consumer
     std::optional<T> dequeue() {
         const size_t current_tail = tail_.load(std::memory_order_relaxed);
-
         // Check if queue is empty
         if (current_tail == head_.load(std::memory_order_acquire)) {
             return std::nullopt;
         }
-
         T value = std::move(buffer_[current_tail]);
         const size_t next_tail = (current_tail + 1) & MASK;
         tail_.store(next_tail, std::memory_order_release);
         return value;
     }
-
     bool is_empty() const {
         return tail_.load(std::memory_order_relaxed) ==
                head_.load(std::memory_order_relaxed);
     }
-
     bool is_full() const {
         const size_t next_head = (head_.load(std::memory_order_relaxed) + 1) & MASK;
         return next_head == tail_.load(std::memory_order_relaxed);
     }
-
     size_t size() const {
         const size_t h = head_.load(std::memory_order_relaxed);
         const size_t t = tail_.load(std::memory_order_relaxed);
