@@ -110,7 +110,11 @@ public:
 
 # Full Implementation: SPSC Lock-Free Queue
 
-A single-producer, single-consumer queue using a ring buffer and acquire-release synchronization:
+A single-producer, single-consumer queue using a ring buffer and acquire-release synchronization.
+Some things to note:
+
+- `enqueue` acquires the tail and releases the head
+- `dequeue` acquires the head and releases the tail
 
 ```cpp
 template <typename T, size_t Capacity = 256>
@@ -128,25 +132,29 @@ public:
     SPSCQueue& operator=(const SPSCQueue&) = delete;
     // Enqueue: only called by producer
     std::expected<void, T> enqueue(T value) {
-        const size_t current_head = head_.load(std::memory_order_relaxed);
-        const size_t next_head = (current_head + 1) & MASK;
-        // Check if queue is full
-        if (next_head == tail_.load(std::memory_order_acquire)) {
+        const auto current_head = head_.load(std::memory_order_relaxed);
+        const auto next_head = (current_head + 1) & MASK;
+        const auto full = next_head == tail_.load(std::memory_order_acquire);
+        if (full) {
             return std::unexpected(value);
         }
+        // The queue is not full and it will not be made full by the other thread while we work
+        // - because the other thread only consumes - so we may freely add our element.
         buffer_[current_head] = value;
         head_.store(next_head, std::memory_order_release);
         return {};
     }
     // Dequeue: only called by consumer
     std::optional<T> dequeue() {
-        const size_t current_tail = tail_.load(std::memory_order_relaxed);
-        // Check if queue is empty
-        if (current_tail == head_.load(std::memory_order_acquire)) {
+        const auto current_tail = tail_.load(std::memory_order_relaxed);
+        const auto empty = current_tail == head_.load(std::memory_order_acquire);
+        if (empty) {
             return std::nullopt;
         }
-        T value = std::move(buffer_[current_tail]);
-        const size_t next_tail = (current_tail + 1) & MASK;
+        // The queue is not empty and it will not be made empty by any other thread while we work,
+        // - because the other thread only produces - so we may freely remove our element.
+        const auto value = std::move(buffer_[current_tail]);
+        const auto next_tail = (current_tail + 1) & MASK;
         tail_.store(next_tail, std::memory_order_release);
         return value;
     }
@@ -158,12 +166,12 @@ public:
                head_.load(std::memory_order_relaxed);
     }
     bool is_full() const {
-        const size_t next_head = (head_.load(std::memory_order_relaxed) + 1) & MASK;
+        const auto next_head = (head_.load(std::memory_order_relaxed) + 1) & MASK;
         return next_head == tail_.load(std::memory_order_relaxed);
     }
     size_t size() const {
-        const size_t h = head_.load(std::memory_order_relaxed);
-        const size_t t = tail_.load(std::memory_order_relaxed);
+        const auto h = head_.load(std::memory_order_relaxed);
+        const auto t = tail_.load(std::memory_order_relaxed);
         return (h - t) & MASK;
     }
 };
