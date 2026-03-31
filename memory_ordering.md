@@ -35,6 +35,21 @@ More specifically:
 - The acquiring thread sees all operations that the releasing thread made before its release
 - The guarantee is **pairwise**: only synchronizes with releases on this specific variable
 
+## Directionality of Visibility
+
+Release and acquire form a one-way channel between threads. When thread `A` does a release store and
+thread `B` subsequently does an acquire load of the same variable (seeing `A` 's stored value),
+everything `A` wrote _before_ its release is visible to everything `B` reads _after_ its acquire.
+
+Critically, this only flows in one direction:
+
+- **Release** is a one-way barrier that "pushes" all preceding writes out before the store. Writes
+  _after_ the release have no guarantee.
+- **Acquire** is a one-way barrier that "holds back" all subsequent reads until after the load.
+  Reads _before_ the acquire have no guarantee.
+
+This is the "happens-before" edge: it runs from the release to the acquire, never the reverse.
+
 ## Release-Acquire Pairing in Action with SPSC Queue
 
 ```cpp
@@ -42,7 +57,7 @@ More specifically:
 const size_t current_head = head_.load(std::memory_order_relaxed);      // Own index, no sync needed
 const size_t next_head = (current_head + 1) & MASK;
 if (next_head == tail_.load(std::memory_order_acquire)) {               // Acquire: see consumer's progress
-    return false;
+    return std::unexpected(value);
 }
 buffer_[current_head] = value;
 head_.store(next_head, std::memory_order_release);                      // Release: publish to consumer
@@ -52,7 +67,7 @@ const size_t current_tail = tail_.load(std::memory_order_relaxed);      // Own i
 if (current_tail == head_.load(std::memory_order_acquire)) {            // Acquire: see producer's progress
     return std::nullopt;
 }
-T value = std::move(buffer_[current_tail]);
+auto value = std::move(buffer_[current_tail]);
 const size_t next_tail = (current_tail + 1) & MASK;
 tail_.store(next_tail, std::memory_order_release);                      // Release: publish to producer
 return value;
@@ -112,16 +127,16 @@ public:
     SPSCQueue(const SPSCQueue&) = delete;
     SPSCQueue& operator=(const SPSCQueue&) = delete;
     // Enqueue: only called by producer
-    bool enqueue(T value) {
+    std::expected<void, T> enqueue(T value) {
         const size_t current_head = head_.load(std::memory_order_relaxed);
         const size_t next_head = (current_head + 1) & MASK;
         // Check if queue is full
         if (next_head == tail_.load(std::memory_order_acquire)) {
-            return false;
+            return std::unexpected(value);
         }
         buffer_[current_head] = value;
         head_.store(next_head, std::memory_order_release);
-        return true;
+        return {};
     }
     // Dequeue: only called by consumer
     std::optional<T> dequeue() {
@@ -135,6 +150,9 @@ public:
         tail_.store(next_tail, std::memory_order_release);
         return value;
     }
+    // These methods are inherently racy (no atomic snapshot of both head_ and tail_),
+    // so results may be stale by the time the caller acts on them. Relaxed ordering is
+    // sufficient since they are only useful for diagnostics, not correctness decisions.
     bool is_empty() const {
         return tail_.load(std::memory_order_relaxed) ==
                head_.load(std::memory_order_relaxed);
