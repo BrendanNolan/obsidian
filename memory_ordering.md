@@ -117,14 +117,15 @@ Some things to note:
 - `dequeue` acquires the head and releases the tail
 
 ```cpp
-template <typename T, size_t Capacity = 256>
+template <typename T, size_t Capacity = 255>
 class SPSCQueue {
-    static_assert((Capacity & (Capacity - 1)) == 0, "Capacity must be a power of 2");
+    static constexpr size_t BufSize = Capacity + 1;
+    static_assert((BufSize & (BufSize - 1)) == 0, "Capacity + 1 must be a power of 2");
 private:
-    static constexpr size_t MASK = Capacity - 1;
+    static constexpr size_t MASK = BufSize - 1;
     alignas(64) std::atomic<size_t> head_{0};  // Producer index
     alignas(64) std::atomic<size_t> tail_{0};  // Consumer index
-    alignas(64) std::array<T, Capacity> buffer_;
+    alignas(64) std::array<T, BufSize> buffer_;
 public:
     SPSCQueue() = default;
     ~SPSCQueue() = default;
@@ -179,15 +180,16 @@ public:
 
 **Key design points**:
 
-- **Ring buffer**: Uses modulo arithmetic (`& MASK`) to wrap indices, requiring capacity to be a
-  power of 2
+- **Ring buffer**: Uses modulo arithmetic (`& MASK`) to wrap indices, requiring `Capacity + 1` to be
+  a power of 2
 - **Cache-line alignment**: `alignas(64)` separates `head_` and `tail_` to prevent false sharing
-- **Non-atomic buffer**: The `std::array<T, Capacity>` buffer is protected by the atomic head/tail
+- **Non-atomic buffer**: The `std::array<T, BufSize>` buffer is protected by the atomic head/tail
   guards
 - **Memory ordering**:
   - Producer: relaxed read of own index, acquire read of consumer's index, release write of updated
     index
   - Consumer: relaxed read of own index, acquire read of producer's index, release write of updated
     index
-- **One wasted slot**: Queue is full when `(head + 1) & MASK == tail` to distinguish empty from full
+- **One wasted slot**: Queue is full when `(head + 1) & MASK == tail` to distinguish empty from
+  full. The extra slot is internal — `Capacity` reflects the true usable capacity
 - **Optional return**: `dequeue()` returns `std::optional<T>` for cleaner error handling
