@@ -173,6 +173,9 @@ public:
     size_t size() const {
         const auto h = head_.load(std::memory_order_relaxed);
         const auto t = tail_.load(std::memory_order_relaxed);
+        // Mathematically the distance is (h - t) modulo BufSize, but when we do the computation on
+        // a computer in the h < t case, the unsigned integers will wrap around and the copmutation
+        // only works because they wrap around modulo a power of 2.
         return (h - t) & MASK;
     }
 };
