@@ -14,31 +14,39 @@ asset, namely company stocks.
   underlying asset at a specified strike price, either on a specific date (European) or at any time
   up to expiry (American).
 
+### Symmetry of Payoffs
+
+Plotting a derivative's profit/loss at expiry against the underlying's price gives a curve whose
+shape reflects the contract's structure:
+
+- **Forwards and futures** have **linear, symmetric** payoffs. Both parties are obligated to
+  transact at the agreed price, so the P&L is just the difference between the spot and the agreed
+  price — a straight line, with gains and losses behaving identically in magnitude.
+- **Options** have **asymmetric, kinked** payoffs. The holder only exercises when favourable, which
+  introduces a `max(., 0)` into the payoff and produces a bend (kink) at the strike: flat on the
+  unfavourable side, linear on the favourable side.
+
+The general principle: **obligation produces linear payoffs; optionality produces kinked payoffs.**
+
 # Long and Short Positions
 
-- A **long** position means owning an asset. Maximum loss is **bounded**: the price can only fall to
-  zero.
-- A **short** position means having sold an asset you do not own, in the hope of buying it back
-  later at a lower price. Maximum loss is **unbounded** — there is no ceiling on how high the price
-  can rise.
+A **long** position is one where you gain from a rise in the value of the underlying asset.
+A **short** position is one where you gain from a fall in the value of the underlying asset.
 
-For **futures** (and forwards), the two sides of the contract are called:
+## Examples of Short Positions
 
-- The **buyer** (or **long**) — agrees to _buy_ the underlying at the specified price on the
-  specified date. Profits if the price rises above the agreed price.
-- The **seller** (or **short**) — agrees to _sell_ the underlying at the specified price on the
-  specified date. Profits if the price falls below the agreed price.
+| Instrument     | Upfront cost/credit | Loss if you're wrong |
+| -------------- | ------------------- | -------------------- |
+| Buy put        | Pay premium         | Capped at premium    |
+| Sell call      | Receive premium     | Unlimited            |
+| Sell futures   | None (margin only)  | Unlimited            |
 
-Both sides are **obligated** to transact at expiry; neither can walk away.
+## Examples of Long Positions
 
-For **options**, the two sides are called:
+| Instrument     | Upfront cost/credit | Loss if you're wrong       |
+| -------------- | ------------------- | -------------------------- |
+| Buy call       | Pay premium         | Capped at premium          |
+| Sell put       | Receive premium     | Capped at strike − premium |
+| Buy futures    | None (margin only)  | Capped at contract value   |
 
-- The **holder** (or **buyer**) — is **long** the option. Owns the right to exercise. Pays an
-  upfront **premium** to the writer in exchange for this right. Maximum loss is the premium; upside
-  is (for a call) unbounded.
-- The **writer** (or **seller**) — is **short** the option. Has _sold_ the option and is obligated
-  to transact if the holder chooses to exercise. Receives the premium upfront. Maximum gain is the
-  premium; downside is (for a call) unbounded.
 
-The asymmetry is the key distinction from futures: in an option, only the holder has a choice; the
-writer is at the holder's mercy. That is why the holder pays a premium for the privilege.
