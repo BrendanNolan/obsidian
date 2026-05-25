@@ -30,23 +30,21 @@ The general principle: **obligation produces linear payoffs; optionality produce
 
 # Long and Short Positions
 
-A **long** position is one where you gain from a rise in the value of the underlying asset.
-A **short** position is one where you gain from a fall in the value of the underlying asset.
+A **long** position is one where you gain from a rise in the value of the underlying asset. A
+**short** position is one where you gain from a fall in the value of the underlying asset.
 
 ## Examples of Short Positions
 
-| Instrument     | Upfront cost/credit | Loss if you're wrong |
-| -------------- | ------------------- | -------------------- |
-| Buy put        | Pay premium         | Capped at premium    |
-| Sell call      | Receive premium     | Unlimited            |
-| Sell futures   | None (margin only)  | Unlimited            |
+| Instrument   | Upfront cost/credit | Loss if you're wrong |
+| ------------ | ------------------- | -------------------- |
+| Buy put      | Pay premium         | Capped at premium    |
+| Sell call    | Receive premium     | Unlimited            |
+| Sell futures | None (margin only)  | Unlimited            |
 
 ## Examples of Long Positions
 
-| Instrument     | Upfront cost/credit | Loss if you're wrong       |
-| -------------- | ------------------- | -------------------------- |
-| Buy call       | Pay premium         | Capped at premium          |
-| Sell put       | Receive premium     | Capped at strike − premium |
-| Buy futures    | None (margin only)  | Capped at contract value   |
-
-
+| Instrument  | Upfront cost/credit | Loss if you're wrong       |
+| ----------- | ------------------- | -------------------------- |
+| Buy call    | Pay premium         | Capped at premium          |
+| Sell put    | Receive premium     | Capped at strike − premium |
+| Buy futures | None (margin only)  | Capped at contract value   |
