@@ -28,10 +28,9 @@ timestamped messages between a grandmaster clock and slaves, with hardware on th
 packets on the wire so OS scheduling jitter doesn't pollute the measurement. NTP, by comparison,
 syncs to milliseconds and lives in software.
 
-Why it matters in HFT: every venue timestamps orders and trades, regulators (MiFID II, CAT)
-mandate timing accuracy, and internal latency measurements (tick-to-trade, A-vs-B feed arbitrage)
-are meaningless if the clocks on your capture box and trading box disagree by more than the
-latencies you're trying to measure. FPGAs sit at the heart of this — the same card that's parsing
-market data is usually disciplining its onboard clock to PTP and stamping every inbound packet
-before the host ever sees it.
-
+Why it matters in HFT: every venue timestamps orders and trades, regulators (MiFID II, CAT) mandate
+timing accuracy, and internal latency measurements (tick-to-trade, A-vs-B feed arbitrage) are
+meaningless if the clocks on your capture box and trading box disagree by more than the latencies
+you're trying to measure. FPGAs sit at the heart of this — the same card that's parsing market data
+is usually disciplining its onboard clock to PTP and stamping every inbound packet before the host
+ever sees it.
