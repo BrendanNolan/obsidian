@@ -6,8 +6,10 @@ but the constraints are sharper:
 **The mental model transfers, but the units shrink.** CUDA trains you to think about data movement,
 memory hierarchies, and where the parallelism actually lives. On FPGAs in HFT the same instincts
 apply, but the budget collapses from "milliseconds for a kernel launch" to "nanoseconds, and the
-PCIe round-trip is now your enemy." You'll obsess over the same things — DMA, pinned memory, cache
-lines, NUMA pinning — except now they dominate everything instead of being an optimization pass.
+PCIe round-trip is now your enemy." You'll obsess over the same things — DMA, pinned memory (memory
+that must stay at the same physical address and can't be moved to a new page behind the same virtual
+address), cache lines, NUMA pinning — except now they dominate everything instead of being an
+optimization pass.
 
 **You stop hiding behind an abstraction.** CUDA gives you a runtime, a driver, a scheduler, a memcpy
 that mostly does the right thing. Writing FPGA drivers means _you are_ that layer. You decide how

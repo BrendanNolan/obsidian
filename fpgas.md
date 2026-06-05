@@ -15,3 +15,23 @@ device, and for the response (or completion) to come back. Two flavors matter:
 - **DMA round-trip** — the card writes a packet/result into host memory and signals completion
   (interrupt or a memory flag the CPU polls). Latency depends on the path, but the device-initiated
   direction is much cheaper than a CPU-initiated read.
+
+# DPDK (Data Plane Development Kit)
+
+Intel-developed userspace-pollable network-card drivers that use hugepages to keep the TLB warm.
+
+# PTP / clock sync
+
+**PTP** (Precision Time Protocol, IEEE 1588) is the protocol used to synchronize clocks across
+machines to sub-microsecond — often sub-100ns — accuracy over Ethernet. It works by exchanging
+timestamped messages between a grandmaster clock and slaves, with hardware on the NIC stamping
+packets on the wire so OS scheduling jitter doesn't pollute the measurement. NTP, by comparison,
+syncs to milliseconds and lives in software.
+
+Why it matters in HFT: every venue timestamps orders and trades, regulators (MiFID II, CAT)
+mandate timing accuracy, and internal latency measurements (tick-to-trade, A-vs-B feed arbitrage)
+are meaningless if the clocks on your capture box and trading box disagree by more than the
+latencies you're trying to measure. FPGAs sit at the heart of this — the same card that's parsing
+market data is usually disciplining its onboard clock to PTP and stamping every inbound packet
+before the host ever sees it.
+
